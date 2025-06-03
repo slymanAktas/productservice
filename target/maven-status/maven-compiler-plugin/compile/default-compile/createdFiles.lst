@@ -1,0 +1,6 @@
+com/saktas/productservice/controllers/ProductRestController.class
+com/saktas/productservice/configurations/ThirdPartyConfigurations.class
+com/saktas/productservice/repositories/ProductRepository.class
+com/saktas/productservice/models/Product.class
+com/saktas/productservice/dto/Coupon.class
+com/saktas/productservice/ProductserviceApplication.class

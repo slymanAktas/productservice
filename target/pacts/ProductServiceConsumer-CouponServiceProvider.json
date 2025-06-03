@@ -1,0 +1,119 @@
+{
+  "consumer": {
+    "name": "ProductServiceConsumer"
+  },
+  "interactions": [
+    {
+      "description": "get coupon detail",
+      "providerStates": [
+        {
+          "name": "coupon exist",
+          "params": {
+            "code": "SUPERSALE"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/couponapi/coupons/SUPERSALE"
+      },
+      "response": {
+        "body": {
+          "code": "SUPERSALE",
+          "discount": 10.0,
+          "expDate": "12/12/2026",
+          "id": 100
+        },
+        "generators": {
+          "body": {
+            "$.id": {
+              "max": 2147483647,
+              "min": 0,
+              "type": "RandomInt"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.discount": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ]
+            },
+            "$.expDate": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "get non present coupon",
+      "providerStates": [
+        {
+          "name": "coupon not found",
+          "params": {
+            "code": "NON-PRESENT"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/couponapi/coupons/NON-PRESENT"
+      },
+      "response": {
+        "status": 404
+      }
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.2.7"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "CouponServiceProvider"
+  }
+}
